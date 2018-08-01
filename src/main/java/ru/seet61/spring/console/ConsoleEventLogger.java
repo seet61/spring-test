@@ -1,4 +1,4 @@
-package ru.seet61.spring;
+package ru.seet61.spring.console;
 
 public class ConsoleEventLogger {
 

@@ -1,4 +1,4 @@
-package ru.seet61.spring;
+package ru.seet61.spring.client;
 
 public class Client {
     private String id;

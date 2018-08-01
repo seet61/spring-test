@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+	        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-    <bean id="client" class="ru.seet61.spring.Client" />
+    <context:component-scan base-package="ru.seet61.spring" />
 
-    <bean id="eventLogger" class="ru.seet61.spring.ConsoleEventLogger" />
+    <bean id="client" class="ru.seet61.spring.client.Client" >
+        <constructor-arg index="0" value="1"/>
+        <constructor-arg index="1" value="John Smith"/>
+    </bean>
 
-    <bean id="app" class="ru.seet61.spring.App" />
+    <bean id="eventLogger" class="ru.seet61.spring.console.ConsoleEventLogger" />
+
+    <bean id="app" class="ru.seet61.spring.App" >
+        <constructor-arg index="0" ref="client"/>
+        <constructor-arg index="1" ref="eventLogger"/>
+    </bean>
 </beans>
