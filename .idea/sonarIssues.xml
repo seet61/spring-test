@@ -63,6 +63,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/resources/loggers.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/test/java/ru/seet61/spring/client/ClientTest.java">
           <value>
             <set />
