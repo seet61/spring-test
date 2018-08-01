@@ -2,28 +2,42 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context
-	        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
     <context:component-scan base-package="ru.seet61.spring" />
     <import resource="loggers.xml" />
 
-    <bean id="client" class="ru.seet61.spring.client.Client" >
-        <constructor-arg index="0" value="1"/>
-        <constructor-arg index="1" value="John Smith"/>
-        <property name="greeting" value="Hello there!" />
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:client.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
     </bean>
+
+    <bean id="client" class="ru.seet61.spring.client.Client" p:greeting="Hello">
+        <constructor-arg value="${id}" />
+        <constructor-arg value="${name}" />
+    </bean>
+
+    <util:map id="loggerMap">
+        <entry key="INFO" value-ref="consoleEventLogger" />
+        <entry key="ERROR" value-ref="combinedEventLogger" />
+    </util:map>
 
     <bean id="app" class="ru.seet61.spring.App" >
         <constructor-arg ref="client"/>
         <constructor-arg ref="cacheFileLogger"/>
-        <constructor-arg>
-            <map>
-                <entry key="INFO" value-ref="consoleEventLogger" />
-                <entry key="ERROR" value-ref="combinedEventLogger" />
-            </map>
-        </constructor-arg>
+        <constructor-arg ref="loggerMap" />
     </bean>
 </beans>
