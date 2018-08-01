@@ -1,5 +1,7 @@
 package ru.seet61.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
@@ -15,12 +17,15 @@ import java.util.LinkedHashMap;
 @Component
 public class App {
     private Client client;
+
+    @Autowired
+    @Qualifier("cacheFileLogger")
     private CacheFileEventLogger defaultLogger;
+
     private LinkedHashMap<EventType, EventLogger> loggers;
 
-    public App(Client client, CacheFileEventLogger defaultLogger, LinkedHashMap<EventType, EventLogger> loggers) {
+    public App(Client client, LinkedHashMap<EventType, EventLogger> loggers) {
         this.client = client;
-        this.defaultLogger = defaultLogger;
         this.loggers = loggers;
     }
 

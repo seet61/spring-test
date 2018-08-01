@@ -12,6 +12,7 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
+    <context:annotation-config />
     <context:component-scan base-package="ru.seet61.spring" />
     <import resource="loggers.xml" />
 
@@ -37,7 +38,6 @@
 
     <bean id="app" class="ru.seet61.spring.App" >
         <constructor-arg ref="client"/>
-        <constructor-arg ref="cacheFileLogger"/>
         <constructor-arg ref="loggerMap" />
     </bean>
 </beans>
