@@ -14,7 +14,24 @@
         <constructor-arg index="1" value="John Smith"/>
     </bean>
 
-    <bean id="eventLogger" class="ru.seet61.spring.console.ConsoleEventLogger" />
+    <bean id="eventLogger" class="ru.seet61.spring.logger.ConsoleEventLogger" />
+
+    <bean id="fileLogger" class="ru.seet61.spring.logger.FileEventLogger" init-method="init">
+        <constructor-arg value="application.log"/>
+    </bean>
+    
+    <bean id="cacheFileLogger" class="ru.seet61.spring.logger.CacheFileEventLogger" destroy-method="destroy">
+        <constructor-arg value="5"/>
+    </bean>
+
+    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" />
+
+    <bean id="event" class="ru.seet61.spring.event.Event" scope="prototype">
+        <constructor-arg>
+            <bean class="java.util.Date" />
+        </constructor-arg>
+        <constructor-arg ref="dateFormat" />
+    </bean>
 
     <bean id="app" class="ru.seet61.spring.App" >
         <constructor-arg index="0" ref="client"/>
