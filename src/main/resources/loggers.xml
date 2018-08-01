@@ -3,13 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="eventLogger" class="ru.seet61.spring.logger.ConsoleEventLogger" />
+    <bean id="consoleEventLogger" class="ru.seet61.spring.logger.ConsoleEventLogger" />
 
-    <bean id="fileLogger" class="ru.seet61.spring.logger.FileEventLogger" init-method="init">
+    <bean id="fileEventLogger" class="ru.seet61.spring.logger.FileEventLogger" init-method="init">
         <constructor-arg value="application.log"/>
     </bean>
 
-    <bean id="cacheFileLogger" class="ru.seet61.spring.logger.CacheFileEventLogger" depends-on="fileLogger" destroy-method="destroy">
+    <bean id="cacheFileLogger" class="ru.seet61.spring.logger.CacheFileEventLogger" depends-on="fileEventLogger" destroy-method="destroy">
         <constructor-arg value="5"/>
     </bean>
 
@@ -20,5 +20,14 @@
             <bean class="java.util.Date" />
         </constructor-arg>
         <constructor-arg ref="dateFormat" />
+    </bean>
+
+    <bean id="combinedEventLogger" class="ru.seet61.spring.logger.CombinedEventLogger" >
+        <constructor-arg>
+            <list>
+                <ref bean="consoleEventLogger" />
+                <ref bean="fileEventLogger" />
+            </list>
+        </constructor-arg>
     </bean>
 </beans>

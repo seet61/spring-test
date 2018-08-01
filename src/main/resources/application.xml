@@ -13,10 +13,17 @@
     <bean id="client" class="ru.seet61.spring.client.Client" >
         <constructor-arg index="0" value="1"/>
         <constructor-arg index="1" value="John Smith"/>
+        <property name="greeting" value="Hello there!" />
     </bean>
 
     <bean id="app" class="ru.seet61.spring.App" >
-        <constructor-arg index="0" ref="client"/>
-        <constructor-arg index="1" ref="eventLogger"/>
+        <constructor-arg ref="client"/>
+        <constructor-arg ref="cacheFileLogger"/>
+        <constructor-arg>
+            <map>
+                <entry key="INFO" value-ref="consoleEventLogger" />
+                <entry key="ERROR" value-ref="combinedEventLogger" />
+            </map>
+        </constructor-arg>
     </bean>
 </beans>

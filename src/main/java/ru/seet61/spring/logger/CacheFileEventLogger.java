@@ -14,7 +14,7 @@ public class CacheFileEventLogger extends FileEventLogger{
     }
 
     public void logEvent(Event event) throws IOException {
-        cache.add(event);
+        this.cache.add(event);
 
         if (cache.size() == cacheSize) {
             writeEventsFromCache();
